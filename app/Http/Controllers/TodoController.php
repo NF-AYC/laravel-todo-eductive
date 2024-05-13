@@ -14,4 +14,15 @@ class TodoController extends Controller
         $todos = Todo::all();
         return response()->json($todos); 
     }
+
+    public function store(Request $request) : JsonResponse
+    {
+        $validated = $request->validate([
+            "title" => ['required', 'string', 'max:255']
+        ]);
+        $todo = new Todo(); 
+        $todo->title = $validated["title"];
+        $todo->save(); 
+        return response()->json($todo, 201);
+    }
 }
