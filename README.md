@@ -14,6 +14,50 @@
 composer create-project laravel/laravel mon_projet
 ```
 
+## Après clone de ce projet : 
+
+ - Il faut créer un fichier `.env`. On peut le faire à partir du `.env.example` : 
+ ```sh
+ cp .env.example .env
+ ```
+
+ Il faut ensuite générer la clé d'application : 
+
+ ```sh
+ php artisan key:generate
+ ```
+
+ ### Migration 
+ On peut maintenant créer les tables de la BDD. Si le fichier `database/database.sqlite`  n'existe pas, laravel vous proposeras de le créer lors de la migration : 
+ ```sh
+php artisan migrate
+```
+
+### Remplissage des tables : 
+
+```sh
+php artisan db:seed 
+# seed le contenu du fichier DatabaseSeeder : créé l'utilisateur test@example.com
+```
+
+On peut rajouter le seed des 50 todos (attention, il n'appartiennent pas l'utilisateur)
+
+```sh
+php artisan db:seed TodoSeeder
+```
+
+:warning: Les todos ne sont associés à aucun utilisateur
+
+On peut le faire en requête Eloquent dans tinker : 
+```sh
+php artisan tinker # lance un interpréteur de commande PHP avec l'application laravel chargée
+```
+
+```php
+Todo::whereNull('user_id')->update(['user_id'=> 1]);
+```
+
+
 ## Lancement du serveur de développement
 
 ```sh
