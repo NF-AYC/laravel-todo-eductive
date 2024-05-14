@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse; 
 use App\Models\Todo;
+use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
 {
@@ -11,7 +12,8 @@ class TodoController extends Controller
 
     public function index(): JsonResponse
     {
-        $todos = Todo::all();
+        $user = Auth::user();
+        $todos = $user->todos;
         return response()->json($todos); 
     }
 
@@ -22,6 +24,7 @@ class TodoController extends Controller
         ]);
         $todo = new Todo(); 
         $todo->title = $validated["title"];
+        $todo->user_id = Auth::user()->id;
         $todo->save(); 
         return response()->json($todo, 201);
     }
