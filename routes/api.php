@@ -9,5 +9,5 @@ use App\Http\Controllers\TodoController;
 // })->middleware('auth:sanctum');
 
 Route::post('/login', [AuthenticationController::class, 'login']);
-Route::get('/todos', [TodoController::class, 'index']);
-Route::post('/todos', [TodoController::class, 'store']);
+Route::get('/todos', [TodoController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/todos', [TodoController::class, 'store'])->middleware('auth:sanctum');
